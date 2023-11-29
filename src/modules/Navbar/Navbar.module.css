@@ -1,0 +1,19 @@
+.header {
+    padding: 26px 0 25px;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.navbar {
+    display: flex;
+}
+
+.logo {
+    margin-right: auto;
+}
+
+.logo,
+.logo img {
+
+    display: block;
+    height: 28px;
+}
