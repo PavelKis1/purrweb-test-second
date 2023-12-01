@@ -1,5 +1,6 @@
 import Login from "../pages/login/Login";
 import Home from "../pages/home/Home";
+import Register from "../pages/register/Register";
 
 
 
@@ -13,7 +14,11 @@ export const privateRoute = [
 
 export const loginRoute = [
     {
-        path: "/",
+        path: "/login",
         element: <Login />
+    },
+    {
+        path: "/register",
+        element: <Register />
     }
 ];

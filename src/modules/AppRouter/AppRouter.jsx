@@ -1,11 +1,12 @@
-import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom";
 import { privateRoute, loginRoute } from '../../routes/routes';
+import { useSelector } from 'react-redux'
 
 function AppRouter() {
-    let isAuth = true;
+    const isAuthState = useSelector(state => state.app.isAuth);
+
     return (
-        isAuth
+        isAuthState
             ?
             <Routes>
                 {privateRoute.map(route =>
@@ -24,7 +25,7 @@ function AppRouter() {
                         element={route.element}
                     />
                 )}
-                <Route path="*" element={<Navigate to={'/'} />} />
+                <Route path="*" element={<Navigate to={'/login'} />} />
             </Routes>
     )
 
