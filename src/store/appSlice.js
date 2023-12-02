@@ -5,6 +5,7 @@ const appSlice = createSlice({
     initialState: {
         user: {},
         isAuth: false,
+        isLoadingPage: true
     },
     reducers: {
         authUser(store, action) {
@@ -12,16 +13,19 @@ const appSlice = createSlice({
         },
         isAuth(store, action) {
             store.isAuth = action.payload
-            localStorage.setItem('isAuthLocal', store.isAuth)
         },
         logout(store) {
             store.user = {};
             store.isAuth = false
-            localStorage.setItem('isAuthLocal', store.isAuth)
+        },
+        isLoadingPage(store, action) {
+            store.isLoadingPage = action.payload;
+            console.log(store.isLoadingPage);
         }
+
     }
 })
 
-export const { authUser, isAuth, logout } = appSlice.actions;
+export const { authUser, isAuth, logout, isLoadingPage } = appSlice.actions;
 
 export default appSlice.reducer;

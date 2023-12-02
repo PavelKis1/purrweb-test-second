@@ -17,6 +17,7 @@ function Login() {
         Auth.login("admin@admin.com", "password123Q")
           .then(async (res) => {
             localStorage.setItem('token', res.data.accessToken);
+            document.cookie = 'refresh=' + res.data.refreshToken;
             const userId = jwtDecode(localStorage.getItem('token')).userId;
             Auth.getUserInfo(userId)
               .then(res => setUser(res.data))

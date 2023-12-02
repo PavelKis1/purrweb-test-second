@@ -2,23 +2,33 @@ import axios from "axios";
 
 export default class AuthService {
 
-    static login(email, password) {
-        return axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/login", { email, password });
+    static async login(email, password) {
+        return await axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/login", { email, password });
     }
 
-    static refreshToken() {
-        return axios.get("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/refresh");
+    static async refreshToken() {
+        return await axios.get("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/refresh");
     }
 
-    static logout() {
-        return axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/log-out");
+    static async logout(token) {
+        return await axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/log-out", {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        });
     }
 
-    static refresh(token) {
-        return axios.post('http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/refresh', { token })
+    static async refresh(token) {
+        return await axios.get('http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/refresh', {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
     }
 
-    static getUserInfo(id) {
-        return axios.get("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/users/" + id);
+    static async getUserInfo(id) {
+        return await axios.get("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/users/" + id);
     }
 }

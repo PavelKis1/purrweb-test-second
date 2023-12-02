@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux'
 
 function AppRouter() {
     const isAuthState = useSelector(state => state.app.isAuth);
+    const isLoadingPageState = useSelector(state => state.app.isLoadingPage);
 
+    if (isLoadingPageState) {
+        return <h1>loading</h1>
+    }
     return (
         isAuthState
             ?
