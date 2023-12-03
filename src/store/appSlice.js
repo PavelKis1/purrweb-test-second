@@ -5,7 +5,7 @@ const appSlice = createSlice({
     initialState: {
         user: {},
         isAuth: false,
-        isLoadingPage: true
+        isLoadingPage: false
     },
     reducers: {
         authUser(store, action) {
@@ -16,11 +16,12 @@ const appSlice = createSlice({
         },
         logout(store) {
             store.user = {};
-            store.isAuth = false
+            store.isAuth = false;
+            localStorage.removeItem('token');
+            document.cookie = `refresh=0; max-age=-1`
         },
         isLoadingPage(store, action) {
             store.isLoadingPage = action.payload;
-            console.log(store.isLoadingPage);
         }
 
     }

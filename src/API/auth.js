@@ -6,14 +6,10 @@ export default class AuthService {
         return await axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/login", { email, password });
     }
 
-    static async refreshToken() {
-        return await axios.get("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/refresh");
-    }
-
     static async logout(token) {
-        return await axios.post("http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/log-out", {
+        return await axios.post( 'http://test-task-second-chance-env.eba-ymma3p3b.us-east-1.elasticbeanstalk.com/auth/log-out', {
             headers: {
-                accept: 'application/json',
+                accept: "*/*",
                 Authorization: `Bearer ${token}`
             }
         });

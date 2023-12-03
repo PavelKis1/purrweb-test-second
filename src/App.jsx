@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
-import { isAuth, authUser, isLoadingPage } from './store/appSlice'
+import { isAuth, authUser } from './store/appSlice'
 import { jwtDecode } from 'jwt-decode';
 import './App.css'
 import AppRouter from './modules/AppRouter/AppRouter';
@@ -8,48 +8,31 @@ import Auth from './API/auth';
 import Navbar from './modules/navbar/Navbar';
 import { useEffect } from 'react';
 import { getCookie } from './utils/utils';
+import { useFetch } from './hooks/useFetch'
 
 
 function App() {
   const dispatch = useDispatch();
   const setAuth = (state) => dispatch(isAuth(state));
   const setUser = (state) => dispatch(authUser(state));
-  const setLoadingPage = (state) => dispatch(isLoadingPage(state));
+
+  const isAuthToken = useFetch(async (token) => {
+    const res = await Auth.refresh(token);
+    localStorage.setItem('token', res.data.accessToken)
+    const userId = jwtDecode(res.data.accessToken).userId;
+    setAuth(true);
+    Auth.getUserInfo(userId).then(e => setUser(e.data));
+  });
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      Auth.refresh(localStorage.getItem('token'))
-        .then(() => {
-          const userId = jwtDecode(localStorage.getItem('token')).userId;
-          setAuth(true);
-          Auth.getUserInfo(userId).then(e => setUser(e.data));
-        })
+      isAuthToken(localStorage.getItem('token'))
         .catch(() => {
-          Auth.refresh(getCookie('refresh'))
-            .then((res) => {
-              localStorage.setItem('token', res.data.accessToken);
-              const userId = jwtDecode(res.data.accessToken).userId;
-              setAuth(true);
-              Auth.getUserInfo(userId).then(e => setUser(e.data));
-            })
-            .catch(e => {
-              setAuth(false);
-              console.log(e.response.status, e.response.statusText);
-            })
+          isAuthToken(getCookie('refresh'));
         })
     } else if (getCookie('refresh')) {
-      Auth.refresh(getCookie('refresh'))
-        .then((res) => {
-          localStorage.setItem('token', res.data.accessToken);
-          const userId = jwtDecode(res.data.accessToken).userId;
-          setAuth(true);
-          Auth.getUserInfo(userId).then(e => setUser(e.data));
-        })
-        .catch(e => {
-          setAuth(false);
-          console.log(e.response.status, e.response.statusText);
-        })
-    }
+      isAuthToken(getCookie('refresh'))
+    } 
   }, [])
 
   return (

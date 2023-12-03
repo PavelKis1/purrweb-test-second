@@ -9,7 +9,9 @@ function Home() {
     return (
         <div>
             <h1>Home</h1>
-            <button onClick={logoutUser}>
+            <button onClick={async () => {
+                logoutUser();
+            }}>
                 Выйти
             </button>
             <p>Пользователь {user.name}</p>

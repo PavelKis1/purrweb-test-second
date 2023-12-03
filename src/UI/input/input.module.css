@@ -1,0 +1,12 @@
+.input {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 12px;
+    background-color: #F2F3F4;
+}
+
+.input::placeholder {
+    color: #717583;
+    font-size: 14px;
+    line-height: 20px
+}

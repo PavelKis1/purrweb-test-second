@@ -7,7 +7,7 @@ function AppRouter() {
     const isLoadingPageState = useSelector(state => state.app.isLoadingPage);
 
     if (isLoadingPageState) {
-        return <h1>loading</h1>
+        return <h1>loading...</h1>
     }
     return (
         isAuthState

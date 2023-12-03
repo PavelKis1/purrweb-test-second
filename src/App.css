@@ -7,3 +7,9 @@
     max-width: 1264px;
     padding: 0 32px;
 }
+
+.login__wrap {
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+}
